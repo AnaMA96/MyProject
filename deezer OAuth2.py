@@ -18,7 +18,7 @@ def main():
 
     params = urlencode({
         'app_id': deezerAppId,
-        'perms': 'basic_access,email,offline_access',
+        'perms': 'basic_access,email,offline_access,manage_library',
         'redirect_uri': 'http://localhost:5000/deezer/callback'
     })
 
