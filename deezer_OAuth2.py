@@ -1,6 +1,5 @@
 import requests
 import pandas as pd
-import matplotlib.pyplot as plt
 from urllib.parse import urlencode
 import os
 from dotenv import load_dotenv

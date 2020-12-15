@@ -17,7 +17,7 @@ def main():
 
     params = urlencode({
         'client_id': clientid,
-        'scope': 'playlist-read-private playlist-read-collaborative user-follow-read user-library-read user-read-email',
+        'scope': 'playlist-read-private playlist-read-collaborative user-follow-read user-library-read user-read-email playlist-modify-public playlist-modify-private',
         'redirect_uri': 'http://127.0.0.1:5000/spotify/callback',
         'response_type': 'code'
     })

@@ -20,9 +20,12 @@ def refreshToken():
 
     authorization = base64.b64encode(bytes(clientid + ':' + clientsecret, 'utf-8'))
     response = requests.post(url, data=params, headers={'Authorization': 'Basic ' + authorization.decode('utf-8')})
-
+    print(f"REFRESH TOKEN: {response.json()}")
+    credentials_json = getCredentials()
+    for k,v in response.json().items():
+            credentials_json[k] = v
     with open('credentials.json', 'w') as outfile:
-        json.dump(response.json(), outfile)
+        json.dump(credentials_json, outfile)
     
     if response.status_code == 200:
         return True
@@ -48,20 +51,16 @@ def get(url, params={}, should_refresh_token=True):
     response = requests.get(url, data=params, headers=headers)
 
     if response.status_code == 200:
+        print(f"GET: {response.json()}")
         return response.json()
     elif response.status_code == 401 and should_refresh_token:
         if refreshToken():
-            get(url, params, headers)
+            return get(url, params, headers)
         else:
             return {'Error': 'Something went wrong'}
     else:
         return {'Error': 'Something went wrong'}
         
-
-def getUserPlaylists():
-    items = []
-    getUserPlaylistsPaginated(items, mePlaylistUrl)
-    return items
 
 def getUserPlaylistsPaginated(items, url):
     if not url:
@@ -71,6 +70,13 @@ def getUserPlaylistsPaginated(items, url):
     items += response_json['items']
 
     getUserPlaylistsPaginated(items, response_json['next'])
+
+
+def getUserPlaylists():
+    items = []
+    getUserPlaylistsPaginated(items, mePlaylistUrl)
+    return items
+
 
 def getUserPlaylistsTraks(playlists):
     for playlist in playlists:
