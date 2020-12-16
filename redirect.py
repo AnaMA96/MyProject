@@ -7,8 +7,8 @@ from urllib.parse import urlencode
 import os
 from dotenv import load_dotenv
 load_dotenv()
-from spotify_OAuth2 import main_spoti
-from deezer_OAuth2 import main_deezer
+from Oauth.spotify_OAuth2 import main_spoti
+from Oauth.deezer_OAuth2 import main_deezer
 
 
 clientid = os.getenv('Client_ID')
@@ -74,7 +74,7 @@ def calling_main_deezer():
 
 @app.route("/")
 def index_api():
-    HtmlFile = open('menu.html', 'r', encoding='utf-8')
+    HtmlFile = open('templates.menu.html', 'r', encoding='utf-8')
     index_api = HtmlFile.read() 
     return index_api
 

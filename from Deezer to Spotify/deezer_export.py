@@ -13,7 +13,7 @@ myPlaylistUrl = 'https://api.deezer.com/user/me/playlists'
 playlistTraksUrl = 'https://api.deezer.com/playlist/{playlist_id}/tracks'
 
 def getDeezerCredentials():
-    with open('deezer_credentials.json') as json_file:
+    with open('../json/deezer_credentials.json') as json_file:
         return json.load(json_file)
 
 def getToken():
@@ -53,7 +53,7 @@ def getUserPlaylistsTracksPaginated(playlist, url):
 def main():
     playlists = getUserPlaylists(myPlaylistUrl)
     getUserPlaylistsTraks(playlists)
-    with open('deezer_playlists.json', 'w') as outfile:
+    with open('../json/deezer_playlists.json', 'w') as outfile:
         json.dump(playlists, outfile)
 
 if __name__ == "__main__":

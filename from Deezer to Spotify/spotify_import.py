@@ -7,7 +7,7 @@ from spotify_export import get, getTokenType, getAccessToken
 me_url = 'https://api.spotify.com/v1/me'
 
 def getCredentials():
-    with open('credentials.json') as json_file:
+    with open('../json/credentials.json') as json_file:
         return json.load(json_file)
 
 def post(url, params={}, should_refresh_token=True):
@@ -26,7 +26,7 @@ def post(url, params={}, should_refresh_token=True):
 
 
 def getDeezerJson():
-     with open('deezer_playlists.json') as json_file:
+     with open('../json/deezer_playlists.json') as json_file:
         return json.load(json_file)
 
 

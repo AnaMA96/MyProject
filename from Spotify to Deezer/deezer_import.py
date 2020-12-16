@@ -6,14 +6,14 @@ from urllib.parse import urlencode
 me_url = 'https://api.deezer.com/user/me'
 
 def getDeezerCredentials():
-    with open('deezer_credentials.json') as json_file:
+    with open('../json/deezer_credentials.json') as json_file:
         return json.load(json_file)
 
 def getToken():
     return getDeezerCredentials()['access_token']
 
 def getSpotifyJson():
-     with open('playlists.json') as json_file:
+     with open('../json/playlists.json') as json_file:
         return json.load(json_file)
 
 def getDeezer(url, query_params={}, params = {}, headers = {}):
