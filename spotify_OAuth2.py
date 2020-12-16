@@ -26,7 +26,7 @@ def main_spoti():
     
 
 if __name__ == "__main__":
-    main()
+    main_spoti()
 
 
 
