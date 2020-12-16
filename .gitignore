@@ -129,6 +129,12 @@ dmypy.json
 .pyre/
 
 
+# Cosinchis de Ana
+.DS_Store
+deezer_playlists.json
+playlists.json
+Pruebinchis.ipynb
 
 credentials.json
 deezer_credentials.json
+
