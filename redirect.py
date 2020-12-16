@@ -7,6 +7,9 @@ from urllib.parse import urlencode
 import os
 from dotenv import load_dotenv
 load_dotenv()
+from spotify_OAuth2 import main_spoti
+from deezer_OAuth2 import main_deezer
+
 
 clientid = os.getenv('Client_ID')
 clientsecret = os.getenv('Client_Secret')
@@ -59,5 +62,25 @@ def getDeezerCredentials(code):
 	with open("deezer_credentials.json", "w") as outfile:
 		json.dump(response.json(), outfile)
 	
+@app.route("/spotify/login")
+def calling_main_spoti():
+	main_spoti()
+	return 'We are redirecting you to login!'
+
+@app.route("/deezer/login")
+def calling_main_deezer():
+	main_deezer()
+	return 'We are redirecting you to login!'
+
+@app.route("/")
+def index_api():
+    HtmlFile = open('menu.html', 'r', encoding='utf-8')
+    index_api = HtmlFile.read() 
+    return index_api
+
+
+
+
+
 
 app.run(debug=True, port=5000)

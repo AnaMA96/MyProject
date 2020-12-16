@@ -5,13 +5,10 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 import webbrowser
-from flask import Flask, request 
-app = Flask (__name__)
-
 deezerAppId = os.getenv('DEEZER_APP_ID')
 deezerSecret = os.getenv('DEEZER_SECRET')
 
-def main():
+def main_deezer():
     #https://connect.deezer.com/oauth/auth.php?app_id=YOUR_APP_ID&redirect_uri=YOUR_REDIRECT_URI&perms=basic_access,email
     provider_url = "https://connect.deezer.com/oauth/auth.php"
 
@@ -27,7 +24,7 @@ def main():
     
 
 if __name__ == "__main__":
-    main()
+    main_deezer()
 
 
 

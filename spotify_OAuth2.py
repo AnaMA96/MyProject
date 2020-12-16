@@ -6,13 +6,11 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 import webbrowser
-from flask import Flask, request 
-app = Flask (__name__)
 
 clientid = os.getenv('Client_ID')
 clientsecret = os.getenv('Client_Secret')
 
-def main():
+def main_spoti():
     provider_url = "https://accounts.spotify.com/authorize"
 
     params = urlencode({
