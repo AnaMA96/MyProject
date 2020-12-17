@@ -16,6 +16,7 @@ from Migrations.spotify_import import main_spoti_import
 from Migrations.spotify_export import main_spoti_export
 from Migrations.deezer_import import main_deezer_import
 
+PORT = os.getenv("PORT")
 clientid = os.getenv('Client_ID')
 clientsecret = os.getenv('Client_Secret')
 deezerAppId = os.getenv('DEEZER_APP_ID')
@@ -143,7 +144,10 @@ def index_api():
     index_api = HtmlFile.read() 
     return index_api
 
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
-
-app.run(debug=True, port=5000)
+app.run("0.0.0.0", PORT, debug=False )
