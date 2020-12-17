@@ -105,6 +105,7 @@ def getDeezerCredentials(code):
 	
 @app.route("/spotify/login")
 def calling_main_spoti():
+	global isDeezerImport
 	if os.path.isfile('json/credentials.json'):
 		main_spoti_export()
 		if os.path.isfile('json/deezer_credentials.json'):
