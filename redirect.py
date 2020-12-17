@@ -22,7 +22,7 @@ deezerAppId = os.getenv('DEEZER_APP_ID')
 deezerSecret = os.getenv('DEEZER_SECRET')
 app = Flask(__name__)
 
-global isDeezerImport
+isDeezerImport = None
 
 @app.route("/spotify/callback")
 def spotify_callback():
