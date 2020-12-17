@@ -24,7 +24,7 @@ def refreshToken():
     credentials_json = getCredentials()
     for k,v in response.json().items():
             credentials_json[k] = v
-    with open('../json/credentials.json', 'w') as outfile:
+    with open('json/credentials.json', 'w') as outfile:
         json.dump(credentials_json, outfile)
     
     if response.status_code == 200:
@@ -34,7 +34,7 @@ def refreshToken():
 
 
 def getCredentials():
-    with open('../json/credentials.json') as json_file:
+    with open('json/credentials.json') as json_file:
         return json.load(json_file)
 
 def getAccessToken():
@@ -95,11 +95,11 @@ def getUserPlaylistsTracksPaginated(playlist, url):
 
     getUserPlaylistsTracksPaginated(playlist, response_json['next'])
 
-def main():
+def main_spoti_export():
     playlists = getUserPlaylists()
     getUserPlaylistsTraks(playlists)
-    with open('../json/playlists.json', 'w') as outfile:
+    with open('json/playlists.json', 'w') as outfile:
         json.dump(playlists, outfile)
 
 if __name__ == "__main__":
-    main()
+    main_spoti_export()

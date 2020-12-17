@@ -4,7 +4,7 @@ import base64
 import os
 from dotenv import load_dotenv
 load_dotenv()
-from deezer_import import getDeezer
+from Migrations.deezer_import import getDeezer
 
 clientid = os.getenv('Client_ID')
 clientsecret = os.getenv('Client_Secret')
@@ -13,7 +13,7 @@ myPlaylistUrl = 'https://api.deezer.com/user/me/playlists'
 playlistTraksUrl = 'https://api.deezer.com/playlist/{playlist_id}/tracks'
 
 def getDeezerCredentials():
-    with open('../json/deezer_credentials.json') as json_file:
+    with open('json/deezer_credentials.json') as json_file:
         return json.load(json_file)
 
 def getToken():
@@ -50,11 +50,11 @@ def getUserPlaylistsTracksPaginated(playlist, url):
     if 'next' in response_json:
         getUserPlaylistsTracksPaginated(playlist, response_json['next'])
 
-def main():
+def main_deezer_export():
     playlists = getUserPlaylists(myPlaylistUrl)
     getUserPlaylistsTraks(playlists)
-    with open('../json/deezer_playlists.json', 'w') as outfile:
+    with open('json/deezer_playlists.json', 'w') as outfile:
         json.dump(playlists, outfile)
 
 if __name__ == "__main__":
-    main()
+    main_deezer_export()

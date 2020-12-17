@@ -2,12 +2,12 @@ import requests
 import json
 import base64
 from urllib.parse import urlencode
-from spotify_export import get, getTokenType, getAccessToken
+from Migrations.spotify_export import get, getTokenType, getAccessToken
 
 me_url = 'https://api.spotify.com/v1/me'
 
 def getCredentials():
-    with open('../json/credentials.json') as json_file:
+    with open('json/credentials.json') as json_file:
         return json.load(json_file)
 
 def post(url, params={}, should_refresh_token=True):
@@ -26,7 +26,7 @@ def post(url, params={}, should_refresh_token=True):
 
 
 def getDeezerJson():
-     with open('../json/deezer_playlists.json') as json_file:
+     with open('json/deezer_playlists.json') as json_file:
         return json.load(json_file)
 
 
@@ -109,7 +109,7 @@ def iteratePlaylists(user_id):
             postPlaylistTracks(playlist_id, tracks_uris)
             
 
-def main():
+def main_spoti_import():
     me_info = get(me_url)
     print(f"IMPORT MAIN: {me_info}")
     iteratePlaylists(str(me_info['id']))
@@ -117,4 +117,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main_spoti_import()

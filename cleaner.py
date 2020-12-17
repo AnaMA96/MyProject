@@ -1,11 +1,11 @@
-from deezer_import import getDeezer, getToken, me_url
+from Migrations.deezer_import import getDeezer, getToken, me_url
 from urllib.parse import urlencode
 import requests, json
 
 me_url = 'https://api.deezer.com/user/me'
 
 def getDeezerCredentials():
-    with open('deezer_credentials.json') as json_file:
+    with open('json/deezer_credentials.json') as json_file:
         return json.load(json_file)
 
 def getToken():
