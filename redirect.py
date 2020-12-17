@@ -53,6 +53,7 @@ def deezer_callback():
 
 @app.route("/spotify/export/callback")
 def spotify_callback_export():
+	global isDeezerImport
 	code = request.args.get('code')
 	if code:
 		getSpotifyCredentials(code, '/spotify/export/callback')
@@ -60,6 +61,7 @@ def spotify_callback_export():
 		if os.path.isfile('json/deezer_credentials.json'):
 			main_deezer_import()
 		else:
+			isDeezerImport = True
 			oauth_deezer('/deezer/callback')
 	return "You finally called me back!"
 
@@ -106,6 +108,7 @@ def getDeezerCredentials(code):
 @app.route("/spotify/login")
 def calling_main_spoti():
 	global isDeezerImport
+	isDeezerImport = None
 	if os.path.isfile('json/credentials.json'):
 		main_spoti_export()
 		if os.path.isfile('json/deezer_credentials.json'):
