@@ -115,7 +115,7 @@ def calling_main_spoti():
 	else:
 		oauth_spoti('/spotify/export/callback')
 		
-	return 'We are redirecting you to login!'
+	return 'Please, be patient, we are bringing back your music!!'
 
 @app.route("/deezer/login")
 def calling_main_deezer():
@@ -131,7 +131,7 @@ def calling_main_deezer():
 		isDeezerImport = False
 		oauth_deezer('/deezer/callback')
 
-	return 'We are redirecting you to login!'
+	return 'Please, be patient, we are bringing back your music!!'
 
 @app.route("/")
 def index_api():
