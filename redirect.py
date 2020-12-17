@@ -37,7 +37,7 @@ def deezer_callback():
 	code = request.args.get('code')
 	if code:
 		getDeezerCredentials(code)
-
+		print(f"DEEZER CALLBACK: {isDeezerImport}")
 		if isDeezerImport == True:
 			main_deezer_import()
 		elif isDeezerImport == False:
