@@ -33,21 +33,25 @@ def searchTrackByName(name, artists_names):
     response_tracks_json = getDeezer(url, query_params={'q': name})
     for track in response_tracks_json['data']:
         if ((track['title'].lower() or track['title_short'].lower()) == name) and (track['artist']['name'].lower() in artists_names):
+            print(f"Found: {name}")
             return track
-    return None
+    return {'Error': 'Not found'}
 
 def searchTrack(isrc, name, artists_names):
+    print(f"SEARCHING BY ISRC: {isrc}")
     url = f'https://api.deezer.com/2.0/track/isrc:{isrc}'
+    
     response = requests.get(url)
-    if response.status_code != 200:
+    response_json = response.json()
+    if 'Error' in response_json or 'error' in response_json:
         track = searchTrackByName(name, artists_names)
-        print(f'searching track: {name}, track: {track}')
         return track
     else:
-        print(f'searching track: {name}, response: {response}')
-        return response.json()
+        print(f'Found: {isrc}, response: {response}')
+        return response_json
     
 def postPlaylist(name, user_id):
+    print(f"Creating playlist: {name}")
     query_params = {}
     url = f'https://api.deezer.com/user/{user_id}/playlists'
     query_params['output'] = 'json'
@@ -55,7 +59,7 @@ def postPlaylist(name, user_id):
     query_params['title'] = name
     url += f'?{urlencode(query_params)}'
     response = requests.post(url)
-    print(response.json())
+    print(f"Created: {response.json()}")
     response_json = response.json()
     if 'id' in response_json:
         return str(response_json['id'])
@@ -63,6 +67,7 @@ def postPlaylist(name, user_id):
         return None
 
 def postPlaylistTracks(playlist_id, tracks_ids):
+    print(f"Adding playlist tracks")
     query_params = {}
     url = f'https://api.deezer.com/playlist/{playlist_id}/tracks'
     query_params['output'] = 'json'
@@ -70,7 +75,7 @@ def postPlaylistTracks(playlist_id, tracks_ids):
     query_params['songs'] = tracks_ids
     url += f'?{urlencode(query_params)}'
     response = requests.post(url)
-    
+    print(f"{response}")
 
 def iteratePlaylists(user_id):
     spotify_json = getSpotifyJson()
@@ -79,24 +84,31 @@ def iteratePlaylists(user_id):
         print(f'Playlists tracks: {playlist_name}')
         playlist_id = postPlaylist(playlist_name, user_id)
         if playlist_id and 'tracks_list' in playlist:
-            tracks_ids = ''
+            tracks_ids = set()
             for track in playlist['tracks_list']:
                 track_isrc = ''
                 if 'isrc' in track['track']['external_ids']:
-                    track['track']['external_ids']['isrc']
+                    track_isrc = track['track']['external_ids']['isrc']
                     track_name = track['track']['name'].lower()
                     artists_names = []
                     for artist in track['track']['artists']:
                         artists_names.append(artist['name'].lower())
                     track_found = searchTrack(track_isrc, track_name, artists_names)
                     if 'id' in track_found:
-                        if tracks_ids == '':
-                            tracks_ids += str(track_found['id'])
-                        else:
-                            t_id = str(track_found['id'])
-                            tracks_ids += f',{t_id}'
-            postPlaylistTracks(playlist_id, tracks_ids)
-            
+                        tracks_ids.add(str(track_found['id']))
+            tarcks_ids = list(tracks_ids)
+
+            tracks_ids_aux = []
+            for track_id in tracks_ids:
+                tracks_ids_aux.append(track_id)
+                if len(tracks_ids_aux) == 100:
+                    tracks = ','.join(tracks_ids_aux)
+                    postPlaylistTracks(playlist_id, tracks)
+                    tracks_ids_aux = []
+    
+            if len(tracks_ids_aux) > 0:
+                tracks = ','.join(tracks_ids_aux)
+                postPlaylistTracks(playlist_id, tracks)
 
 def main_deezer_import():
     me_info = getDeezer(me_url)

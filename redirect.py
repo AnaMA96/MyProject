@@ -136,12 +136,9 @@ def calling_main_deezer():
 
 @app.route("/")
 def index_api():
-
-    HtmlFile = open('templates/menu.html', 'r', encoding='utf-8')
+    HtmlFile = open('menu2.html', 'r', encoding='utf-8')
     index_api = HtmlFile.read() 
     return index_api
-
-
 
 
 

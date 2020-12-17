@@ -89,6 +89,7 @@ def getUserPlaylistsTracksPaginated(playlist, url):
         return
 
     response_json = get(url)
+    print(response_json)
     tracks_list = playlist['tracks_list']
     tracks_list += response_json['items']
     playlist['tracks_list'] = tracks_list
