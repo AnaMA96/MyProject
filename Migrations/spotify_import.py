@@ -77,7 +77,7 @@ def postPlaylistTracks(playlist_id, tracks_uris):
     tracks_uris_param = []
     for track_uri in tracks_uris:
         tracks_uris_param.append(track_uri)
-        if len(tracks_uris_param) == 100:
+        if len(tracks_uris_param) == 100: #maximum100 per request
             post_tracks_url = url + '?' + urlencode({'uris': ','.join(tracks_uris_param)})        
             print(post_tracks_url)
             post(post_tracks_url)
